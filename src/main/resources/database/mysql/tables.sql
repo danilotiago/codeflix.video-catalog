@@ -8,3 +8,13 @@ CREATE TABLE categories(
 	is_active BOOLEAN DEFAULT FALSE,
 	PRIMARY KEY (code)
 );
+
+CREATE TABLE genres(
+	code BINARY(16) NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME DEFAULT NULL,
+	deleted_at DATETIME DEFAULT NULL,
+	is_active BOOLEAN DEFAULT FALSE,
+	PRIMARY KEY (code)
+);

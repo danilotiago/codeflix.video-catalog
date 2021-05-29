@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 public class CategoryRequestDTO {
 
     @NotNull(message = "O nome da categoria é obrigatório")
-    @Size(min = 3, max = 100, message = "O nome deve conter no mínimo 3 e no máximo 100 caracteres")
+    @Size(min = 3, max = 100, message = "O nome da categoria deve conter no mínimo 3 e no máximo 100 caracteres")
     private String name;
 
     private String description;
