@@ -1,0 +1,10 @@
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/codeflix_video_catalog
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.cj.jdbc.Driver
