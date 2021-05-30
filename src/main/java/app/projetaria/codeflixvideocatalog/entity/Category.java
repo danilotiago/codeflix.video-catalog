@@ -1,6 +1,5 @@
 package app.projetaria.codeflixvideocatalog.entity;
 
-import app.projetaria.codeflixvideocatalog.listener.TimestampsListener;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,7 +12,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@EntityListeners({ TimestampsListener.class })
 @Where(clause = "deleted_at IS NULL")
 @SQLDelete(sql = "UPDATE categories SET deleted_at = NOW() WHERE code = ?")
 @Entity(name = "categories")
@@ -32,4 +30,14 @@ public class Category {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    @PrePersist
+    private void beforePersist() {
+        setCreatedAt(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    private void beforeUpdate() {
+        setUpdatedAt(LocalDateTime.now());
+    }
 }

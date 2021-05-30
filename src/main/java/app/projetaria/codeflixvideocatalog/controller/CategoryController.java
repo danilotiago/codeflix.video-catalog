@@ -5,7 +5,9 @@ import app.projetaria.codeflixvideocatalog.dto.CategoryResponseDTO;
 import app.projetaria.codeflixvideocatalog.entity.Category;
 import app.projetaria.codeflixvideocatalog.mapper.CategoryMapper;
 import app.projetaria.codeflixvideocatalog.repository.CategoryRepository;
+import app.projetaria.codeflixvideocatalog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,32 +20,30 @@ import java.util.UUID;
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository repository;
+    private CategoryService service;
 
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> list() {
-
-        return null;
+        List<CategoryResponseDTO> response = CategoryMapper.INSTANCE.from(this.service.list());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{code}")
     public ResponseEntity<CategoryResponseDTO> find(@PathVariable UUID code) {
-
-        Category category = repository.findById(code).get();
-
-        return null;
+        CategoryResponseDTO response = CategoryMapper.INSTANCE.from(this.service.find(code));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<CategoryResponseDTO> save(@Valid @RequestBody CategoryRequestDTO data) {
-
         Category category = CategoryMapper.INSTANCE.from(data);
-
-        return null;
+        CategoryResponseDTO response = CategoryMapper.INSTANCE.from(this.service.save(category));
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID code) {
-        this.repository.deleteById(code); // caso nao exista => org.springframework.dao.EmptyResultDataAccessException
+        this.service.delete(code);
     }
 }

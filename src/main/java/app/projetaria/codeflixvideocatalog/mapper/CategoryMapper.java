@@ -6,6 +6,8 @@ import app.projetaria.codeflixvideocatalog.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface CategoryMapper {
 
@@ -14,4 +16,6 @@ public interface CategoryMapper {
     Category from(CategoryRequestDTO data);
 
     CategoryResponseDTO from(Category data);
+
+    List<CategoryResponseDTO> from(List<Category> data);
 }
