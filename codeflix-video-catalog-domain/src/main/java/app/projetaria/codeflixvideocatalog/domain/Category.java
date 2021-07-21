@@ -1,9 +1,6 @@
 package app.projetaria.codeflixvideocatalog.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +9,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Category {
 
     private UUID code;
@@ -27,5 +25,13 @@ public class Category {
     private LocalDateTime updatedAt;
 
     private LocalDateTime deletedAt;
+
+    public void active() {
+        this.isActive = Boolean.TRUE;
+    }
+
+    public void inactive() {
+        this.isActive = Boolean.FALSE;
+    }
 }
 

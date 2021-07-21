@@ -2,17 +2,15 @@ package app.projetaria.codeflixvideocatalog.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Where(clause = "deleted_at IS NULL")
 @SQLDelete(sql = "UPDATE categories SET deleted_at = NOW() WHERE code = ?")
 @Entity(name = "categories")
 public class CategoryEntity {

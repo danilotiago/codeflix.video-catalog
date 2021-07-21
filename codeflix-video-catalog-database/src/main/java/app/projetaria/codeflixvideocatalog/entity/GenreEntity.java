@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Where(clause = "deleted_at IS NULL")
 @SQLDelete(sql = "UPDATE genres SET deleted_at = NOW() WHERE code = ?")
 @Entity(name = "genres")
 public class GenreEntity {
