@@ -1,12 +1,13 @@
 package Integration;
 
 import app.projetaria.codeflixvideocatalog.CodeflixVideoCatalogApplication;
-import app.projetaria.codeflixvideocatalog.dto.CategoryRequestDTO;
+import app.projetaria.codeflixvideocatalog.domain.Category;
+import app.projetaria.codeflixvideocatalog.ports.persistence.CategoryPersistence;
 import app.projetaria.codeflixvideocatalog.ports.usecase.CategoryManagerUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,17 +16,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = CodeflixVideoCatalogApplication.class)
 @AutoConfigureMockMvc
@@ -38,6 +41,9 @@ public class SaveCategoryUseCaseIntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private CategoryPersistence persistence;
 
     @Autowired
     private CategoryManagerUseCase categoryManagerUseCase;
@@ -66,11 +72,16 @@ public class SaveCategoryUseCaseIntegrationTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andReturn();
 
-        // VALIDAR O @CONFIG PRA SUBIR O SPRING APENAS UMA VEZ EM TODOS OS TESTES INTEGRADOS
+        String code = extractCodeFromResponse(requestResult);
+        Category category = persistence.get(UUID.fromString(code));
 
-        // pegar response e bater o tamanho do code e se o code existe
+        assertEquals(code, category.getCode().toString());
+    }
 
-        //Assertions.assertEquals(requestResult.getResponse().getco);
+    private String extractCodeFromResponse(MvcResult requestResult) throws UnsupportedEncodingException {
+        DocumentContext resultJson = JsonPath.parse(requestResult.getResponse().getContentAsString());
+
+        return resultJson.read("['code']");
     }
 
     private String getCategoryJsonBy(String categoryType) throws JsonProcessingException {
