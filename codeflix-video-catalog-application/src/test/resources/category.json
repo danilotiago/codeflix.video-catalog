@@ -1,0 +1,19 @@
+{
+    "valid_category": {
+        "name": "New category",
+        "description": "New Catalog saved",
+        "is_active": true
+    },
+    "invalid_category_without_name": {
+        "description": "New Catalog saved",
+        "is_active": true
+    },
+    "invalid_category_without_description": {
+        "name": "New category",
+        "is_active": true
+    },
+    "invalid_category_without_status": {
+        "name": "New category",
+        "description": "New Catalog saved"
+    }
+}
