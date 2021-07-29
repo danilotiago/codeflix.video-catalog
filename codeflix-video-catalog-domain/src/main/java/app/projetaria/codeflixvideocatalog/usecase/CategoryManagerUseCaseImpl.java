@@ -5,7 +5,6 @@ import app.projetaria.codeflixvideocatalog.exceptions.BusinessException;
 import app.projetaria.codeflixvideocatalog.messages.ErrorMessages;
 import app.projetaria.codeflixvideocatalog.ports.persistence.CategoryPersistence;
 import app.projetaria.codeflixvideocatalog.ports.usecase.CategoryManagerUseCase;
-import app.projetaria.codeflixvideocatalog.services.CategoryManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +18,6 @@ public class CategoryManagerUseCaseImpl implements CategoryManagerUseCase {
 
     @Autowired
     private CategoryPersistence persistence;
-
-    @Autowired
-    private CategoryManagerService service;
 
     @Override
     public Category get(UUID code) {
@@ -68,25 +64,5 @@ public class CategoryManagerUseCaseImpl implements CategoryManagerUseCase {
         }
 
         this.persistence.delete(categoryFounded);
-    }
-
-    @Override
-    public void active(Category category) {
-        if (isNull(category)) {
-            throw new BusinessException(ErrorMessages.CATEGORY_REQUIRED);
-        }
-
-        this.service.active(category);
-        this.persistence.active(category);
-    }
-
-    @Override
-    public void inactive(Category category) {
-        if (isNull(category)) {
-            throw new BusinessException(ErrorMessages.CATEGORY_REQUIRED);
-        }
-
-        this.service.inactive(category);
-        this.persistence.inactive(category);
     }
 }

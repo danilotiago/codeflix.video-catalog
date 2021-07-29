@@ -18,8 +18,4 @@ public interface CategoryManagerUseCase {
     Category save(Category category);
 
     void delete(UUID code);
-
-    void active(Category category);
-
-    void inactive(Category category);
 }

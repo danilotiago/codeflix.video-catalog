@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import static java.util.Objects.isNull;
 
 @Component
-public class CategoryManagerService {
+public class ChangeStatusCategoryService {
 
     public void active(Category category) {
         if (isNull(category)) {
