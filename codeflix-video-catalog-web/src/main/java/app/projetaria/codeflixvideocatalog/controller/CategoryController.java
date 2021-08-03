@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,10 +48,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDTO> save(@RequestBody CategoryRequestDTO data) {
-
-        // aplicar fluent validator
-
+    public ResponseEntity<CategoryResponseDTO> save(@Valid @RequestBody CategoryRequestDTO data) {
         Category category = CategoryMapper.INSTANCE.from(data);
         CategoryResponseDTO response = CategoryMapper.INSTANCE.from(this.categoryManagerUseCase.save(category));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -12,6 +12,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <properties>
+        <hibernate.validation.version>7.0.1.Final</hibernate.validation.version>
+    </properties>
+
     <artifactId>codeflix-video-catalog-web</artifactId>
 
     <dependencies>
@@ -20,6 +24,14 @@
             <artifactId>codeflix-video-catalog-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- HIBERNATE VALIDATOR -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validation.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
