@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: codeflix_video_catalog
+    ports: 
+      - 9000:8080
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=dev
